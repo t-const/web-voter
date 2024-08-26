@@ -20,7 +20,10 @@
 		"vscode": {
 			"settings": {
 				"debug.allowBreakpointsEverywhere": true
-			}
+			},
+			"extensions": [
+				"ritwickdey.LiveServer"
+			]
 		}
 	},
 
