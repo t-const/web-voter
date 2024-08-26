@@ -11,6 +11,16 @@
 			"profile": "default",
 			"targets": "x86_64-unknown-redox,x86_64-unknown-uefi"
 		}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"yandeu.five-server",
+				"rust-lang.rust-analyzer",
+				"dbaeumer.vscode-eslint",
+				"christian-kohler.path-intellisense"
+			]
+		}
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
