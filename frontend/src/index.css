@@ -47,3 +47,88 @@
 	color: #1d89e2;
 	margin-bottom: 8px;
 }
+.user-preview a {
+	text-decoration: none;
+}
+/* user details */
+.user-details h2 {
+  font-size: 20px;
+  color: #1d89e2;
+  margin-bottom: 10px;
+}
+.user-details div {
+  margin: 20px 0;
+}
+.user-details button {
+  background: #1d89e2;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* rooms preview */
+.room-preview {
+	padding: 10px 16px;
+	margin: 20px 0;
+	border-bottom: 1px solid #fafafa;
+}
+.room-preview:hover {
+	box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+}
+.room-preview h2 {
+	font-size: 20px;
+	color: #1d89e2;
+	margin-bottom: 8px;
+}
+.room-preview a {
+	text-decoration: none;
+}
+/* Room details */
+.room-details h2 {
+  font-size: 20px;
+  color: #1d89e2;
+  margin-bottom: 10px;
+}
+.room-details div {
+  margin: 20px 0;
+}
+.room-details button {
+  background: #1d89e2;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* create new room */
+.create {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.create label {
+  text-align: left;
+  display: block;
+}
+.create h2 {
+  font-size: 20px;
+  color: #1d89e2;
+  margin-bottom: 30px;
+}
+.create input, .create textarea, .create select {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+.create button {
+  background: #1d89e2;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
