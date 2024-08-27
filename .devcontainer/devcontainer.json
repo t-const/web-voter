@@ -18,8 +18,18 @@
 				"yandeu.five-server",
 				"rust-lang.rust-analyzer",
 				"dbaeumer.vscode-eslint",
-				"christian-kohler.path-intellisense"
-			]
+				"christian-kohler.path-intellisense",
+				"dsznajder.es7-react-js-snippets",
+				"burkeholland.simple-react-snippets",
+				"ecmel.vscode-html-css",
+				"Zignd.html-css-class-completion"
+			],
+			"settings": {
+				"html.suggest.html5": true,
+				"emmet.includeLanguages": {
+					"javascript": "html"
+				}
+			}
 		}
 	},
 
