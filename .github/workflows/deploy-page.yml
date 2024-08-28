@@ -32,6 +32,6 @@ jobs:
         run: cd frontend && npm run build
 
       - name: Deploy to GitHub Pages
-        uses: action/deploy-pages
+        uses: actions/deploy-pages
         with:
           path: .frontend/build
