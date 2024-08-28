@@ -4,12 +4,21 @@
 		{
 			"type": "cargo",
 			"command": "build",
-			"args": ["--manifest-path", "backend/Cargo.toml"],
+			"args": [
+				"--manifest-path",
+				"backend/Cargo.toml"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],
 			"group": "build",
 			"label": "rust: cargo build"
+		},
+		{
+			"type": "shell",
+			"label": "Run json server",
+			"command": "cd frontend && npx json-server --watch data/db.json --port 8000",
+			"problemMatcher": []
 		}
 	]
 }
