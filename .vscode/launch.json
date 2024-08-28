@@ -17,7 +17,7 @@
             "name": "Debug",
             "program": "${workspaceFolder}/backend/target/debug/backend",
             "args": [],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${workspaceFolder}/backend",
             "preLaunchTask": "rust: cargo build"
         }
     ]

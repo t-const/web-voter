@@ -28,7 +28,7 @@ async fn main() -> std::io::Result<()> {
     // Connect to the db
     let (client, connection) = tokio_postgres::connect(&database_url, NoTls)
         .await
-        .expect("Failed to conenct to the database");
+        .expect("Failed to connect to the database");
 
     // Wrap the client in Arc and Mutex
     let client = Arc::new(Mutex::new(client));

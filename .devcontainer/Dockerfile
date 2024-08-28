@@ -1,8 +1,10 @@
 FROM mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm
 
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    cd frontend && npm install
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
+
+RUN apt-get update && apt-get install postgresql-client \
+    && chmod +x ./db/init_db.sh && ./db/init_db.sh
 
 # [Optional] Uncomment if you want to install an additional version of node using nvm
 # ARG EXTRA_NODE_VERSION=10

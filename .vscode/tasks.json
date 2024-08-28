@@ -6,7 +6,7 @@
 			"command": "build",
 			"args": [
 				"--manifest-path",
-				"backend/Cargo.toml"
+				"./backend/Cargo.toml"
 			],
 			"problemMatcher": [
 				"$rustc"
