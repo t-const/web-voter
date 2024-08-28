@@ -3,7 +3,7 @@ use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use dotenv::dotenv;
 use env_logger;
 use log::info;
-use models::User;
+use models::{User, Room};
 use serde::Deserialize;
 use std::env;
 use std::sync::Arc;
@@ -38,8 +38,83 @@ async fn get_user(client: web::Data<Arc<Client>>, params: web::Query<QueryParams
     }
 }
 
-async fn test_handler() -> impl Responder {
-    HttpResponse::Ok().json("This is a test")
+async fn get_users(client: web::Data<Arc<Client>>) -> impl Responder {
+    // Perform the query
+    match client.query(
+        "SELECT id, name, body, status FROM users",
+        &[]
+    ).await {
+        Ok(rows) => {
+            let users: Vec<User> = rows.iter().map(|row| User {
+                id: row.get(0),
+                name: row.get(1),
+                body: row.get(2),
+                status: row.get(3),
+            }).collect();            
+            HttpResponse::Ok().json(users) // Return the user as JSON
+        }
+        Err(_) => HttpResponse::NotFound().json(serde_json::json!({ "error": "Users not found" })),
+    }
+}
+
+async fn get_room(client: web::Data<Arc<Client>>, params: web::Query<QueryParams>) -> impl Responder {
+    let id = params.id;
+
+    // Perform the query
+    match client.query_one(
+        "SELECT id, name, body, admin FROM rooms WHERE id = $1",
+        &[&id]
+    ).await {
+        Ok(row) => {
+            // Map the result to the User struct
+            let room = Room {
+                id: row.get(0),
+                name: row.get(1),
+                body: row.get(2),
+                admin: row.get(3),
+            };
+            HttpResponse::Ok().json(room)
+        }
+        Err(_) => HttpResponse::NotFound().json(serde_json::json!({ "error": "Room not found" })),
+    }
+}
+
+async fn get_rooms(client: web::Data<Arc<Client>>) -> impl Responder {
+    // Perform the query
+    match client.query(
+        "SELECT id, name, body, admin FROM rooms",
+        &[]
+    ).await {
+        Ok(rows) => {
+            let rooms: Vec<Room> = rows.iter().map(|row| Room {
+                id: row.get(0),
+                name: row.get(1),
+                body: row.get(2),
+                admin: row.get(3),
+            }).collect();            
+            HttpResponse::Ok().json(rooms) // Return the user as JSON
+        }
+        Err(_) => HttpResponse::NotFound().json(serde_json::json!({ "error": "Rooms not found" })),
+    }
+}
+
+async fn delete_room(client: web::Data<Arc<Client>>, params: web::Query<QueryParams>) -> impl Responder {
+    let id = params.id;
+
+    // Execute the DELETE query
+    match client.execute(
+        "DELETE FROM rooms WHERE id = $1",
+        &[&id]
+    ).await {
+        Ok(rows_affected) => {
+            if rows_affected > 0 {
+                HttpResponse::Ok().json(serde_json::json!({ "status": "Room deleted" }))
+            } else {
+                HttpResponse::NotFound().json(serde_json::json!({ "error": "Room not found" }))
+            }
+        }
+        Err(_) => HttpResponse::InternalServerError().json(serde_json::json!({ "error": "Failed to delete room" })),
+    }
 }
 
 #[actix_web::main]
@@ -78,7 +153,10 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(Cors::permissive())
             .route("/user", web::get().to(get_user))
-            .route("/", web::get().to(test_handler))
+            .route("/users", web::get().to(get_users))
+            .route("/room", web::get().to(get_room))
+            .route("/rooms", web::get().to(get_rooms))
+            .route("/room", web::delete().to(delete_room))
             .app_data(web::Data::new(client.clone()))
     })
     .bind(format!("{}:{}", host, port))?
