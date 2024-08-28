@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
+import UserDetails from "./UserDetails";
 
 const RoomDetails = () => {
 	const { id } = useParams();
@@ -23,6 +24,7 @@ const RoomDetails = () => {
 					<h2>{room.name}</h2>
 					<div>{room.body}</div>
 					<button onClick={handleClick}>delete</button>
+					{room.admin && <UserDetails id={room.admin}/>}
 				</article>
 			)}
 		</div>

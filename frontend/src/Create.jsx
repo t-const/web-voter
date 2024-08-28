@@ -1,16 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {useNavigate} from 'react-router-dom';
+import useFetch from "./useFetch";
 
 const Create = () => {
 	const [name, setName] = useState('Room creation');
 	const [body, setBody] = useState('');
-	const [admin, setAdmin] = useState('User hey');
+	const [adminName, setAdminName] = useState('');
+	const [admin, setAdmin] = useState('');
 	const [isPending, setIsPending] = useState(false)
+	const {data: allUsers, isPending: isUsersFetchPending, error} = useFetch('http://localhost:8000/users');
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		console.log(allUsers)
+		setAdminName(allUsers?.[0]?.name || '');
+		setAdmin(allUsers?.[0]?.id || '');
+	}, [allUsers]);
+
+	useEffect(() => {
+		console.log(admin)
+	}, [admin])
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const room = { name, body, admin };
+		console.log(room);
 
 		setIsPending(true);
 
@@ -42,12 +56,21 @@ const Create = () => {
 					onChange={(e) => setBody(e.target.value)}>
 				</textarea>
 				<label>Room  admin:</label>
-				<select
-					value={admin}
-					onChange={(e) => setAdmin(e.target.value)}>
-					<option value="User hey">User hey</option>
-					<option value="User nay">User nay</option>
-				</select>
+				{isUsersFetchPending && <div>Loading possible admins...</div>}
+				{error && <div>{error}</div>}
+				{!error && !isUsersFetchPending && <select
+					value={adminName}
+					onChange={(e) => {
+						setAdminName(e.target.label);
+						setAdmin(e.target.value);
+						}}>
+					{allUsers.map(u => (
+						<option value={u.id}>
+							{u.name}
+						</option>
+					))}
+					</select>
+				}
 				{!isPending && <button>Add Room</button> }
 				{isPending && <button disabled>Adding Room...</button> }
 			</form>
