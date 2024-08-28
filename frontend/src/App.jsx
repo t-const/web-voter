@@ -4,6 +4,7 @@ import UserDetails from './UserDetails';
 import Navbar from './Navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import RoomDetails from './RoomDetails';
+import NotFound from './NotFound';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
             <Route path="/create" element={<Create />}></Route>
             <Route path="/users/:id" element={<UserDetails />}></Route>
             <Route path="/rooms/:id" element={<RoomDetails />}></Route>
+            <Route path="*" element={<NotFound />}></Route>
           </Routes>
         </div>
       </div>

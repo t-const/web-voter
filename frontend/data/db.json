@@ -25,12 +25,5 @@
       "status": "connected"
     }
   ],
-  "rooms": [
-    {
-      "id": "d4f8",
-      "name": "Room creation",
-      "body": "NAYYYYYY",
-      "admin": "User nay"
-    }
-  ]
+  "rooms": []
 }

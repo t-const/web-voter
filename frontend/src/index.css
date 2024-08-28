@@ -132,3 +132,23 @@
   border-radius: 8px;
   cursor: pointer;
 }
+/* not found */
+.not-found {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.not-found h2 {
+  font-size: 20px;
+  color: #1d89e2;
+  margin-bottom: 30px;
+}
+.not-found div {
+  margin: 20px 0;
+}
+.not-found p {
+  margin: 20px 0;
+}
+.not-found a:hover {
+  color: #1d89e2;
+}
