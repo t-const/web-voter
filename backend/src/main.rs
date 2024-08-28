@@ -3,7 +3,7 @@ use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use dotenv::dotenv;
 use env_logger;
 use log::info;
-use models::{User, Room};
+use models::{User, Room, NewRoom};
 use serde::Deserialize;
 use std::env;
 use std::sync::Arc;
@@ -76,6 +76,19 @@ async fn get_room(client: web::Data<Arc<Client>>, params: web::Query<QueryParams
             HttpResponse::Ok().json(room)
         }
         Err(_) => HttpResponse::NotFound().json(serde_json::json!({ "error": "Room not found" })),
+    }
+}
+
+async fn new_room(client: web::Data<Arc<Client>>, new_room: web::Json<NewRoom>) -> impl Responder {
+    let new_room = new_room.into_inner();
+
+    // Execute the INSERT query
+    match client.execute(
+        "INSERT INTO rooms (name, body, admin) VALUES ($1, $2, $3)",
+        &[&new_room.name, &new_room.body, &new_room.admin]
+    ).await {
+        Ok(_) => HttpResponse::Created().json(serde_json::json!({ "status": "Room created" })),
+        Err(_) => HttpResponse::InternalServerError().json(serde_json::json!({ "error": "Failed to create room" })),
     }
 }
 
@@ -155,6 +168,7 @@ async fn main() -> std::io::Result<()> {
             .route("/user", web::get().to(get_user))
             .route("/users", web::get().to(get_users))
             .route("/room", web::get().to(get_room))
+            .route("/room", web::post().to(new_room))
             .route("/rooms", web::get().to(get_rooms))
             .route("/room", web::delete().to(delete_room))
             .app_data(web::Data::new(client.clone()))

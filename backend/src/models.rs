@@ -1,4 +1,4 @@
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 #[derive(Serialize)]
 pub struct User {
@@ -11,6 +11,14 @@ pub struct User {
 #[derive(Serialize)]
 pub struct Room {
     pub id: i32,
+    pub name: String,
+    pub body: String,
+    pub admin: String,
+}
+
+// Define a struct for the request body
+#[derive(Deserialize)]
+pub struct NewRoom {
     pub name: String,
     pub body: String,
     pub admin: String,

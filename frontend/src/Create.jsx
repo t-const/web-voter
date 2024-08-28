@@ -14,7 +14,7 @@ const Create = () => {
 
 		setIsPending(true);
 
-		fetch('http://localhost:8000/rooms/', {
+		fetch('http://localhost:8000/room', {
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(room)
