@@ -4,10 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-tokio = { version = "1", features = ["full"] }
-tokio-postgres = "0.7"
 actix-web = {version = "4"}
 actix-cors = "0.6"
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-dotenv = "0.15"  # For loading environment variables (optional)
+diesel = { version = "1.4.8", features = ["postgres", "r2d2",] }
+dotenv = "0.15.0"
+r2d2 = "0.8.9"
