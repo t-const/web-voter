@@ -12,19 +12,13 @@ const Create = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		console.log(allUsers)
 		setAdminName(allUsers?.[0]?.name || '');
 		setAdmin(allUsers?.[0]?.id || '');
 	}, [allUsers]);
 
-	useEffect(() => {
-		console.log(admin)
-	}, [admin])
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		const room = { name, body, admin };
-		console.log(room);
 
 		setIsPending(true);
 
@@ -65,7 +59,7 @@ const Create = () => {
 						setAdmin(e.target.value);
 						}}>
 					{allUsers.map(u => (
-						<option value={u.id}>
+						<option value={u.id} key={u.id}>
 							{u.name}
 						</option>
 					))}
