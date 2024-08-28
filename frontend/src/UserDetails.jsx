@@ -4,6 +4,7 @@ import useFetch from "./useFetch";
 const UserDetails = () => {
 	const { id } = useParams();
 	const { data: user, error, isPending } = useFetch('http://localhost:8000/users/' + id);
+	console.log(user)
 
 	return (
 		<div className="user-details">
