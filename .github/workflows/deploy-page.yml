@@ -1,9 +1,5 @@
 name: Deploy Frontend React app to  GitHub Pages
 
-permissions:
-  contents:
-    write 
-
 on:
   push:
     branches:
@@ -14,6 +10,18 @@ on:
 
 jobs:
   build-and-deploy:
+
+    permissions:
+      pages:
+        write 
+      id-token:
+        write
+    
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
     runs-on: ubuntu-latest # see how to change and sync devcontainer/local docker file definition eventually
 
     steps:
@@ -30,8 +38,11 @@ jobs:
 
       - name: Build the app
         run: cd frontend && npm run build
+      
+      - name: Create deploy artifacts
+        uses: actions/upload-artifacts@v4
+        with:
+          path: frontend/build/
 
       - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages
-        with:
-          path: .frontend/build
+        uses: actions/deploy-pages@v4
