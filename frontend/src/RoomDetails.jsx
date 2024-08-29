@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import UserDetails from "./UserDetails";
 import { API_URL } from "./config";
+import VoteGrid from "./VoteGrid";
 
 const RoomDetails = () => {
 	const { id } = useParams();
@@ -24,6 +25,7 @@ const RoomDetails = () => {
 				<article>
 					<h2>{room.name}</h2>
 					<div>{room.body}</div>
+					<VoteGrid title={"Votes"} votes={[0.5, 1, 2, 3, 5, 8, 'Coffee']}/>
 					<button onClick={handleClick}>delete</button>
 					{room.admin && <UserDetails id={room.admin}/>}
 				</article>
