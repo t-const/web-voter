@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     
     environment:
-      REACT_APP_API_BASE_URL: 'http://localhost:3000'
+      BACKEND_APP_API_URL: http://localhost:8000
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: postgres

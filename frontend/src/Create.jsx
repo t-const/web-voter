@@ -1,37 +1,52 @@
 import { useEffect, useState } from "react";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import useFetch from "./useFetch";
+import { API_URL } from "./config"
 
 const Create = () => {
 	const [name, setName] = useState('Room creation');
 	const [body, setBody] = useState('');
-	const [adminName, setAdminName] = useState('');
-	const [admin, setAdmin] = useState('');
+	const [admin, setAdmin] = useState({ name: '', id: '' });
 	const [isPending, setIsPending] = useState(false)
-	const {data: allUsers, isPending: isUsersFetchPending, error} = useFetch('http://localhost:8000/users');
+	const { data: allUsers, isPending: isUsersFetchPending, error } = useFetch(`${API_URL}/users`);
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		setAdminName(allUsers?.[0]?.name || '');
-		setAdmin(allUsers?.[0]?.id || '');
+		if (allUsers && allUsers.length > 0) {
+			setAdmin({ name: allUsers[0].name, id: allUsers[0].id });
+		}
 	}, [allUsers]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const room = { name, body, admin };
+		const room = { name, body, admin: admin.id };
 
 		setIsPending(true);
 
-		fetch('http://localhost:8000/room', {
+		fetch(`${API_URL}/room`, {
 			method: 'POST',
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(room)
-		}).then(() => {
+		}).then((response) => {
+			if (!response.ok) {
+				throw new Error("Failed to create new room");
+			}
+			return response.json();
+		}).then((data) => {
 			console.log('Added new room');
 			setIsPending(false);
-		});
+			navigate('/');
+		})
+			.catch(err => {
+				console.error('Error:', err);
+				setIsPending(false);
+			});
+	};
 
-		navigate('/');
+	const handleSelect = (e) => {
+		const selectedId = e.target.value;
+    const selectedName = e.target.options[e.target.selectedIndex].text;
+    setAdmin({ name: selectedName, id: selectedId });
 	};
 
 	return (
@@ -53,20 +68,17 @@ const Create = () => {
 				{isUsersFetchPending && <div>Loading possible admins...</div>}
 				{error && <div>{error}</div>}
 				{!error && !isUsersFetchPending && <select
-					value={adminName}
-					onChange={(e) => {
-						setAdminName(e.target.label);
-						setAdmin(e.target.value);
-						}}>
+					value={admin.name}
+					onChange={handleSelect}>
 					{allUsers.map(u => (
 						<option value={u.id} key={u.id}>
 							{u.name}
 						</option>
 					))}
-					</select>
+				</select>
 				}
-				{!isPending && <button>Add Room</button> }
-				{isPending && <button disabled>Adding Room...</button> }
+				{!isPending && <button>Add Room</button>}
+				{isPending && <button disabled>Adding Room...</button>}
 			</form>
 		</div>
 	);

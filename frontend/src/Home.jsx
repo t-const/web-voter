@@ -1,10 +1,11 @@
 import RoomList from "./RoomList";
 import UserList from "./UserList";
 import useFetch from "./useFetch";
+import { API_URL } from "./config";
 
 const Home = () => {
-	const { data: users, isPending, error } = useFetch('http://localhost:8000/users');
-	const { data: rooms, isPending: isRoomPending, error: roomError } = useFetch('http://localhost:8000/rooms');
+	const { data: users, isPending, error } = useFetch(`${API_URL}/users`);
+	const { data: rooms, isPending: isRoomPending, error: roomError } = useFetch(`${API_URL}/rooms`);
 
 	return (
 		<div className="home">

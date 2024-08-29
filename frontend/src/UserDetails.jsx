@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
+import { API_URL } from "./config";
 
 const UserDetails = ({id: propId}) => {
 	const { id: paramId } = useParams();
 	const id = propId || paramId;
-	const { data: user, error, isPending } = useFetch('http://localhost:8000/user?id=' + id);
+	const { data: user, error, isPending } = useFetch(`${API_URL}/user?id=` + id);
 
 	return (
 		<div className="user-details">

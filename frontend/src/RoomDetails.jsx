@@ -1,14 +1,15 @@
 import { useNavigate, useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import UserDetails from "./UserDetails";
+import { API_URL } from "./config";
 
 const RoomDetails = () => {
 	const { id } = useParams();
-	const { data: room, error, isPending } = useFetch('http://localhost:8000/room?id=' + id);
+	const { data: room, error, isPending } = useFetch(`${API_URL}/room?id=` + id);
 	const navigation = useNavigate();
 
 	const handleClick = () => {
-		fetch('http://localhost:8000/room?id=' + room.id, {
+		fetch(`${API_URL}/room?id=` + room.id, {
 			method: 'DELETE'
 		}).then(() => {
 			navigation('/');

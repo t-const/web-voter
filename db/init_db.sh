@@ -23,14 +23,10 @@ CREATE TABLE IF NOT EXISTS rooms (
 
 -- Insert data into users
 INSERT INTO users (id, name, body, status) VALUES
-(1, 'User1', 'Some desc', 'connected')
-ON CONFLICT (id) DO NOTHING,
-(2, 'User2', 'Some desc', 'connected')
-ON CONFLICT (id) DO NOTHING,
-(3, 'User3', 'Some desc', 'disconnected')
-ON CONFLICT (id) DO NOTHING,
-(4, 'User4', 'Some desc', 'connected')
-ON CONFLICT (id) DO NOTHING;
+(1, 'User1', 'Some desc', 'connected'),
+(2, 'User2', 'Some desc', 'connected'),
+(3, 'User3', 'Some desc', 'disconnected'),
+(4, 'User4', 'Some desc', 'connected');
 
 -- Insert data into rooms
 INSERT INTO rooms (id, name, body, admin) VALUES
